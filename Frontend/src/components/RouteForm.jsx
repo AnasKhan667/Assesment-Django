@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { MapPin, Flag, ArrowUpDown, Sparkles, Navigation, Info, Fuel, Gauge, Sliders } from 'lucide-react';
+import { ArrowUpDown, Sparkles, Navigation, Info, Fuel, Gauge, SlidersHorizontal, MapPin, Flag } from 'lucide-react';
 
 const PRESETS = [
-  { label: 'NYC → Los Angeles', dist: '~2,815 mi', start: 'New York, NY', finish: 'Los Angeles, CA' },
-  { label: 'Chicago → Miami', dist: '~1,380 mi', start: 'Chicago, IL', finish: 'Miami, FL' },
-  { label: 'Seattle → Boston', dist: '~3,020 mi', start: 'Seattle, WA', finish: 'Boston, MA' },
+  { label: 'NYC → Los Angeles', dist: '2,815 mi', start: 'New York, NY', finish: 'Los Angeles, CA' },
+  { label: 'Chicago → Miami', dist: '1,380 mi', start: 'Chicago, IL', finish: 'Miami, FL' },
+  { label: 'Seattle → Boston', dist: '3,020 mi', start: 'Seattle, WA', finish: 'Boston, MA' },
   { label: 'NYC → Philadelphia', dist: '104 mi (0 stops)', start: 'New York, NY', finish: 'Philadelphia, PA' },
 ];
 
 export default function RouteForm({ onSubmit, loading }) {
   const [start, setStart] = useState('New York, NY');
   const [finish, setFinish] = useState('Los Angeles, CA');
-  const [showConfig, setShowConfig] = useState(false);
+  const [showSpecs, setShowSpecs] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,147 +31,144 @@ export default function RouteForm({ onSubmit, loading }) {
   };
 
   return (
-    <div className="bg-slate-900/90 rounded-2xl border border-slate-800 shadow-xl p-5 md:p-6 backdrop-blur-sm">
-      <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+    <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 md:p-6 transition-all">
+      <div className="flex items-center justify-between pb-4 border-b border-slate-100">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400">
-            <Navigation className="w-5 h-5" />
+          <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+            <Navigation className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-base font-bold text-white tracking-tight">Route Dispatch Planner</h2>
-            <p className="text-xs text-slate-400">Define origin and destination coordinates across continental US</p>
+            <h2 className="text-sm font-bold text-slate-900 tracking-tight">Route Dispatch Setup</h2>
+            <p className="text-xs text-slate-500">Plan cost-optimal fuel stops across US highways</p>
           </div>
         </div>
 
         <button
           type="button"
-          onClick={() => setShowConfig(!showConfig)}
-          className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 bg-slate-800/80 hover:bg-slate-800 px-2.5 py-1.5 rounded-lg border border-slate-700/60 transition-colors"
+          onClick={() => setShowSpecs(!showSpecs)}
+          className="text-xs font-medium text-slate-500 hover:text-slate-800 flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 transition-colors"
         >
-          <Sliders className="w-3.5 h-3.5 text-blue-400" />
-          <span>{showConfig ? 'Hide Specs' : 'Fleet Specs'}</span>
+          <SlidersHorizontal className="w-3.5 h-3.5 text-blue-600" />
+          <span>{showSpecs ? 'Hide Parameters' : 'Fleet Parameters'}</span>
         </button>
       </div>
 
-      {/* Fleet Specs Dropdown */}
-      {showConfig && (
-        <div className="my-4 p-4 rounded-xl bg-slate-950/60 border border-slate-800 text-xs space-y-2 text-slate-300">
-          <div className="flex items-center justify-between font-semibold text-slate-200 pb-1 border-b border-slate-800">
-            <span>Assessment Model Specifications</span>
-            <span className="text-[10px] text-blue-400 font-mono">FIXED CONSTRAINTS</span>
+      {/* Fleet Parameters Drawer */}
+      {showSpecs && (
+        <div className="my-4 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-2">
+          <div className="flex items-center justify-between font-semibold text-slate-800 pb-1.5 border-b border-slate-200">
+            <span>Assessment Model Parameters</span>
+            <span className="text-[10px] text-blue-600 font-mono font-bold">ENFORCED CONSTRAINTS</span>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1 text-slate-400">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
             <div>
-              <span className="text-slate-500 block text-[10px] uppercase">Vehicle Range</span>
-              <strong className="text-slate-200 font-mono text-xs">500.0 Miles</strong>
+              <span className="text-slate-400 block text-[10px] uppercase font-semibold">Max Range</span>
+              <strong className="text-slate-800 font-mono">500.0 Miles</strong>
             </div>
             <div>
-              <span className="text-slate-500 block text-[10px] uppercase">Fuel Economy</span>
-              <strong className="text-slate-200 font-mono text-xs">10.0 MPG</strong>
+              <span className="text-slate-400 block text-[10px] uppercase font-semibold">Efficiency</span>
+              <strong className="text-slate-800 font-mono">10.0 MPG</strong>
             </div>
             <div>
-              <span className="text-slate-500 block text-[10px] uppercase">Starting Tank</span>
-              <strong className="text-emerald-400 font-mono text-xs">100% (50.0 gal)</strong>
+              <span className="text-slate-400 block text-[10px] uppercase font-semibold">Departure State</span>
+              <strong className="text-emerald-700 font-mono">100% Full Tank</strong>
             </div>
             <div>
-              <span className="text-slate-500 block text-[10px] uppercase">Corridor Radius</span>
-              <strong className="text-slate-200 font-mono text-xs">50.0 Mi Lateral</strong>
+              <span className="text-slate-400 block text-[10px] uppercase font-semibold">Corridor Detour</span>
+              <strong className="text-slate-800 font-mono">50.0 Mi Radius</strong>
             </div>
           </div>
         </div>
       )}
 
-      {/* Inputs Form */}
+      {/* Connected Origin & Destination Inputs (Google Maps / Uber style) */}
       <form onSubmit={handleSubmit} className="mt-5 space-y-4">
-        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Start */}
-          <div className="space-y-1.5">
-            <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
-              Origin (US City / State)
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-emerald-400">
-                <MapPin className="w-4 h-4" />
+        <div className="relative bg-slate-50/80 rounded-2xl p-3 border border-slate-200/90">
+          <div className="relative flex flex-col space-y-2">
+            {/* Origin Input */}
+            <div className="flex items-center gap-3 bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all">
+              <span className="w-3 h-3 rounded-full bg-emerald-500 shrink-0 ring-4 ring-emerald-50"></span>
+              <div className="flex-1 min-w-0">
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  Origin (USA)
+                </label>
+                <input
+                  type="text"
+                  value={start}
+                  onChange={(e) => setStart(e.target.value)}
+                  placeholder="e.g. New York, NY"
+                  required
+                  disabled={loading}
+                  className="w-full bg-transparent text-sm font-semibold text-slate-900 placeholder-slate-400 focus:outline-none"
+                />
               </div>
-              <input
-                type="text"
-                value={start}
-                onChange={(e) => setStart(e.target.value)}
-                placeholder="e.g. New York, NY"
-                required
-                disabled={loading}
-                className="w-full pl-10 pr-4 py-3 bg-slate-950/80 border border-slate-700/80 rounded-xl text-white text-sm font-medium placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-              />
             </div>
-          </div>
 
-          {/* Swap Button (Centered between inputs on desktop) */}
-          <div className="hidden md:flex absolute left-1/2 top-[34px] -translate-x-1/2 z-10">
-            <button
-              type="button"
-              onClick={handleSwap}
-              disabled={loading}
-              className="p-2 rounded-full bg-slate-800 border border-slate-700 hover:bg-slate-700 text-slate-300 hover:text-white transition-all shadow-md"
-              title="Swap Origin and Destination"
-            >
-              <ArrowUpDown className="w-3.5 h-3.5" />
-            </button>
-          </div>
-
-          {/* Finish */}
-          <div className="space-y-1.5">
-            <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-rose-500 inline-block"></span>
-              Destination (US City / State)
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-rose-400">
-                <Flag className="w-4 h-4" />
-              </div>
-              <input
-                type="text"
-                value={finish}
-                onChange={(e) => setFinish(e.target.value)}
-                placeholder="e.g. Los Angeles, CA"
-                required
+            {/* Vertical Connector Line & Swap Button */}
+            <div className="relative h-2 flex items-center justify-center">
+              <div className="absolute left-[21px] top-[-8px] bottom-[-8px] w-0.5 border-l-2 border-dashed border-slate-300"></div>
+              <button
+                type="button"
+                onClick={handleSwap}
                 disabled={loading}
-                className="w-full pl-10 pr-4 py-3 bg-slate-950/80 border border-slate-700/80 rounded-xl text-white text-sm font-medium placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-              />
+                className="absolute right-4 p-1.5 rounded-full bg-white border border-slate-200 hover:bg-slate-100 text-slate-500 hover:text-slate-900 shadow-xs transition-all z-10"
+                title="Swap Origin and Destination"
+              >
+                <ArrowUpDown className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* Destination Input */}
+            <div className="flex items-center gap-3 bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all">
+              <span className="w-3 h-3 rounded-sm bg-rose-500 shrink-0 ring-4 ring-rose-50"></span>
+              <div className="flex-1 min-w-0">
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  Destination (USA)
+                </label>
+                <input
+                  type="text"
+                  value={finish}
+                  onChange={(e) => setFinish(e.target.value)}
+                  placeholder="e.g. Los Angeles, CA"
+                  required
+                  disabled={loading}
+                  className="w-full bg-transparent text-sm font-semibold text-slate-900 placeholder-slate-400 focus:outline-none"
+                />
+              </div>
             </div>
           </div>
         </div>
 
         {/* Quick Presets */}
-        <div className="pt-1 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-semibold text-slate-400 flex items-center gap-1 mr-1">
-              <Sparkles className="w-3 h-3 text-amber-400" />
-              Presets:
-            </span>
-            {PRESETS.map((p, idx) => (
-              <button
-                type="button"
-                key={idx}
-                onClick={() => handleSelectPreset(p)}
-                disabled={loading}
-                className={`text-xs px-2.5 py-1.5 rounded-lg border font-medium transition-all ${
-                  start === p.start && finish === p.finish
-                    ? 'bg-blue-600/20 border-blue-500 text-blue-300 font-semibold shadow-xs'
-                    : 'bg-slate-800/60 border-slate-700/70 text-slate-300 hover:bg-slate-800 hover:text-white'
-                }`}
-              >
-                <span>{p.label}</span>
-                <span className="text-[10px] text-slate-500 ml-1.5 font-mono">({p.dist})</span>
-              </button>
-            ))}
-          </div>
+        <div className="flex flex-wrap items-center gap-2 pt-1">
+          <span className="text-xs font-semibold text-slate-400 flex items-center gap-1 mr-1">
+            <Sparkles className="w-3 h-3 text-amber-500" />
+            Quick Presets:
+          </span>
+          {PRESETS.map((p, idx) => (
+            <button
+              type="button"
+              key={idx}
+              onClick={() => handleSelectPreset(p)}
+              disabled={loading}
+              className={`text-xs px-2.5 py-1.5 rounded-lg border font-medium transition-all ${
+                start === p.start && finish === p.finish
+                  ? 'bg-blue-50 border-blue-300 text-blue-700 font-semibold shadow-2xs'
+                  : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+              }`}
+            >
+              <span>{p.label}</span>
+              <span className="text-[10px] text-slate-400 ml-1.5 font-mono">({p.dist})</span>
+            </button>
+          ))}
+        </div>
 
-          {/* Submit CTA */}
+        {/* Submit Action */}
+        <div className="pt-2">
           <button
             type="submit"
             disabled={loading}
-            className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-blue-600/25 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shrink-0"
+            className="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-sm rounded-xl shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {loading ? (
               <>
@@ -179,12 +176,12 @@ export default function RouteForm({ onSubmit, loading }) {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <span>Optimizing Corridor...</span>
+                <span>Optimizing Highway Corridor...</span>
               </>
             ) : (
               <>
                 <Navigation className="w-4 h-4" />
-                <span>Calculate Optimal Route</span>
+                <span>Calculate Cost-Optimal Fuel Route</span>
               </>
             )}
           </button>

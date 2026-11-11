@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { AlertCircle, RefreshCw, Layers } from 'lucide-react';
+import { AlertCircle, RefreshCw } from 'lucide-react';
 import Navbar from './components/Navbar';
 import RouteForm from './components/RouteForm';
 import SummaryCard from './components/SummaryCard';
@@ -36,7 +36,7 @@ export default function App() {
       if (err.response && err.response.data && err.response.data.error) {
         setError(err.response.data.error);
       } else {
-        setError('Failed to connect to the Django API service at http://localhost:8000. Please ensure the backend server is running.');
+        setError('Failed to reach backend API at http://localhost:8000. Please ensure Django backend is running.');
       }
     } finally {
       setLoading(false);
@@ -79,8 +79,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-blue-500 selection:text-white">
-      {/* Top Navbar */}
+    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans selection:bg-blue-600 selection:text-white">
+      {/* Top Navigation */}
       <Navbar
         planResult={planResult}
         onCopyJson={handleCopyJson}
@@ -88,71 +88,65 @@ export default function App() {
         onExportCsv={handleExportCsv}
       />
 
-      {/* Main Content Dashboard */}
+      {/* Main Container */}
       <main className="max-w-[1600px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 space-y-6 flex-1">
         {/* Route Input Form */}
         <RouteForm onSubmit={handlePlanRoute} loading={loading} />
 
-        {/* Error Alert */}
+        {/* Error Notification */}
         {error && (
-          <div className="bg-rose-950/40 border border-rose-500/40 rounded-2xl p-4 text-rose-300 flex items-start gap-3 shadow-lg shadow-rose-950/30">
-            <AlertCircle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
+          <div className="bg-rose-50 border border-rose-200 rounded-2xl p-4 text-rose-800 flex items-start gap-3 shadow-xs">
+            <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
             <div className="text-xs">
-              <strong className="font-bold text-rose-200">Routing Exception:</strong> {error}
+              <strong className="font-bold">Routing Notice:</strong> {error}
             </div>
           </div>
         )}
 
-        {/* Loading Skeleton */}
+        {/* Loading Spinner */}
         {loading && !planResult && (
-          <div className="bg-slate-900/80 rounded-2xl border border-slate-800 p-12 text-center">
-            <RefreshCw className="w-8 h-8 text-blue-500 animate-spin mx-auto mb-3" />
-            <h4 className="text-sm font-bold text-white">Analyzing US Highway Fuel Corridor...</h4>
-            <p className="text-xs text-slate-400 mt-1">
-              Geocoding endpoints &bull; Projecting 8,000+ candidate truck stops &bull; Running look-ahead cost optimizer
+          <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center shadow-xs">
+            <RefreshCw className="w-8 h-8 text-blue-600 animate-spin mx-auto mb-3" />
+            <h4 className="text-sm font-bold text-slate-800">Calculating Highway Corridor & Fuel Optimization...</h4>
+            <p className="text-xs text-slate-500 mt-1">
+              Geocoding endpoints &bull; Projecting candidate stations &bull; Running look-ahead cost-minimizer
             </p>
           </div>
         )}
 
-        {/* Dashboard Results */}
+        {/* Dynamic Results */}
         {planResult && (
           <div className="space-y-6">
             <SummaryCard summary={planResult.summary} />
 
-            {/* Split Grid: Map & Stops */}
-            <div className="space-y-6">
-              <RouteMap
-                route={planResult.route}
-                stops={planResult.optimal_fuel_stops}
-                selectedStop={selectedStop}
-                onSelectStop={(stop) => setSelectedStop(stop)}
-              />
+            <RouteMap
+              route={planResult.route}
+              stops={planResult.optimal_fuel_stops}
+              selectedStop={selectedStop}
+              onSelectStop={(stop) => setSelectedStop(stop)}
+            />
 
-              <FuelStopsList
-                stops={planResult.optimal_fuel_stops}
-                selectedStop={selectedStop}
-                onSelectStop={(stop) => setSelectedStop(stop)}
-              />
-            </div>
+            <FuelStopsList
+              stops={planResult.optimal_fuel_stops}
+              selectedStop={selectedStop}
+              onSelectStop={(stop) => setSelectedStop(stop)}
+            />
           </div>
         )}
       </main>
 
-      {/* Production Footer */}
-      <footer className="border-t border-slate-800/80 bg-slate-900/50 py-5 text-xs text-slate-500">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-400">FuelRoute Enterprise Platform</span>
-            <span>&bull; Spotter Assessment Candidate Muhammad</span>
-          </div>
-          <div className="flex items-center gap-4 text-[11px] text-slate-400 font-mono">
-            <span>Django 6.1.3</span>
+      {/* Clean Footer */}
+      <footer className="border-t border-slate-200 bg-white py-4 text-xs text-slate-500 mt-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <span>FuelRoute Fleet Platform &bull; Spotter Assessment Candidate Muhammad</span>
+          <div className="flex items-center gap-3 font-mono text-[11px] text-slate-400">
+            <span>Django 6.1</span>
             <span>&bull;</span>
             <span>DRF 3.18</span>
             <span>&bull;</span>
-            <span>Leaflet + React 19</span>
+            <span>CartoDB Voyager</span>
             <span>&bull;</span>
-            <span>OpenRouteService</span>
+            <span>Leaflet</span>
           </div>
         </div>
       </footer>
