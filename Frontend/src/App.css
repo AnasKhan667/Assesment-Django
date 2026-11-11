@@ -1,25 +1,65 @@
 @import "tailwindcss";
 
-/* Leaflet marker & popup adjustments */
+@layer base {
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.4);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.4);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.7);
+}
+
+/* Leaflet map styles */
+.leaflet-container {
+  font-family: inherit;
+  z-index: 10;
+}
+
 .custom-pin {
   background: transparent;
   border: none;
 }
 
 .leaflet-popup-content-wrapper {
-  border-radius: 0.75rem;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-  padding: 0.25rem;
-  font-family: inherit;
+  background: #0f172a !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(51, 65, 85, 0.8) !important;
+  border-radius: 1rem !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4) !important;
+  padding: 0 !important;
 }
 
 .leaflet-popup-content {
-  margin: 0.75rem 1rem;
-  font-size: 0.875rem;
+  margin: 0 !important;
   line-height: 1.4;
-  color: #1f2937;
 }
 
-.leaflet-container {
-  font-family: inherit;
+.leaflet-popup-tip {
+  background: #0f172a !important;
+  border: 1px solid rgba(51, 65, 85, 0.8);
+}
+
+.leaflet-popup-close-button {
+  color: #94a3b8 !important;
+  top: 10px !important;
+  right: 12px !important;
+}
+.leaflet-popup-close-button:hover {
+  color: #f8fafc !important;
 }
