@@ -1,0 +1,25 @@
+# Python & Django
+venv/
+**/venv/
+*.pyc
+*.pyo
+__pycache__/
+**/__pycache__/
+*.log
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Frontend (Node / Vite)
+node_modules/
+**/node_modules/
+Frontend/dist/
+dist/
+
+# Environment secrets
+.env
+**/.env
+
+# OS
+.DS_Store
+Thumbs.db

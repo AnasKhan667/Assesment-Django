@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "c8a45e7f-7123-4890-a192-3a5f829c98bc",
+		"name": "Spotter Fuel Route API",
+		"description": "API collection for Spotter Backend Assessment - Optimal Fuel Stop Planner",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Plan Fuel Route (NYC to LA - Long Distance)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"start\": \"New York, NY\",\n  \"finish\": \"Los Angeles, CA\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/routes/plan/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"routes",
+						"plan",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Plan Fuel Route (Chicago to Miami)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"start\": \"Chicago, IL\",\n  \"finish\": \"Miami, FL\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/routes/plan/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"routes",
+						"plan",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Plan Fuel Route (NYC to Philadelphia - Short Trip < 500 mi)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"start\": \"New York, NY\",\n  \"finish\": \"Philadelphia, PA\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/routes/plan/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"routes",
+						"plan",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
