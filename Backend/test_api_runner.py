@@ -45,3 +45,4 @@ print(f"Total Fuel Cost: ${data2['summary']['total_fuel_cost']} (Expected: $0.00
 print("=" * 60)
 print("ALL END-TO-END TESTS PASSED SUCCESSFULLY!")
 print("=" * 60)
+
