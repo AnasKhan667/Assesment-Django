@@ -1,4 +1,5 @@
 import logging
+import requests
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -36,6 +37,20 @@ class RoutePlanView(APIView):
         # Step 1: Geocode start + finish (parallel)
         try:
             start_coords, finish_coords = client.geocode_parallel(start, finish)
+        except requests.exceptions.HTTPError as exc:
+            if exc.response is not None and exc.response.status_code in (401, 403):
+                return Response(
+                    {
+                        "error": "OpenRouteService API key is missing or invalid. "
+                        "Please sign up for a free key at https://openrouteservice.org/dev/#/signup "
+                        "and add it to Backend/.env as ORS_API_KEY."
+                    },
+                    status=status.HTTP_401_UNAUTHORIZED,
+                )
+            return Response(
+                {"error": f"Geocoding service error: {str(exc)}"},
+                status=status.HTTP_502_BAD_GATEWAY,
+            )
         except ValueError as exc:
             return Response(
                 {"error": str(exc)},
@@ -51,6 +66,18 @@ class RoutePlanView(APIView):
         # Step 2: Get route from ORS (1 routing API call)
         try:
             route_data = client.get_route(start_coords, finish_coords)
+        except requests.exceptions.HTTPError as exc:
+            if exc.response is not None and exc.response.status_code in (401, 403):
+                return Response(
+                    {
+                        "error": "OpenRouteService API key is invalid or unauthorized. Please verify ORS_API_KEY in Backend/.env."
+                    },
+                    status=status.HTTP_401_UNAUTHORIZED,
+                )
+            return Response(
+                {"error": "Routing service failed to calculate directions for the selected points."},
+                status=status.HTTP_502_BAD_GATEWAY,
+            )
         except Exception as exc:
             logger.error("Routing API failed: %s", exc)
             return Response(
