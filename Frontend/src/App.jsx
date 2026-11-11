@@ -80,7 +80,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans selection:bg-blue-600 selection:text-white">
-      {/* Top Navigation */}
+      {/* Top Navigation - Charcoal / Black Header */}
       <Navbar
         planResult={planResult}
         onCopyJson={handleCopyJson}
@@ -119,19 +119,21 @@ export default function App() {
           <div className="space-y-6">
             <SummaryCard summary={planResult.summary} />
 
-            {/* Side-by-Side Flex Layout: Map (Left 50%) + Refuel Schedule (Right 50%) */}
+            {/* Side-by-Side Flex Layout: Refueling Schedule (Left) + Route Map (Right) */}
             <div className="flex flex-col lg:flex-row items-stretch gap-6">
+              {/* Left Column: Refueling Schedule Table */}
               <div className="w-full lg:w-1/2 flex flex-col min-h-[580px]">
-                <RouteMap
-                  route={planResult.route}
+                <FuelStopsList
                   stops={planResult.optimal_fuel_stops}
                   selectedStop={selectedStop}
                   onSelectStop={(stop) => setSelectedStop(stop)}
                 />
               </div>
 
+              {/* Right Column: Interactive Map */}
               <div className="w-full lg:w-1/2 flex flex-col min-h-[580px]">
-                <FuelStopsList
+                <RouteMap
+                  route={planResult.route}
                   stops={planResult.optimal_fuel_stops}
                   selectedStop={selectedStop}
                   onSelectStop={(stop) => setSelectedStop(stop)}
