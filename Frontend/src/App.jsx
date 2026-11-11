@@ -119,18 +119,25 @@ export default function App() {
           <div className="space-y-6">
             <SummaryCard summary={planResult.summary} />
 
-            <RouteMap
-              route={planResult.route}
-              stops={planResult.optimal_fuel_stops}
-              selectedStop={selectedStop}
-              onSelectStop={(stop) => setSelectedStop(stop)}
-            />
+            {/* Side-by-Side Flex Layout: Map (Left 50%) + Refuel Schedule (Right 50%) */}
+            <div className="flex flex-col lg:flex-row items-stretch gap-6">
+              <div className="w-full lg:w-1/2 flex flex-col min-h-[580px]">
+                <RouteMap
+                  route={planResult.route}
+                  stops={planResult.optimal_fuel_stops}
+                  selectedStop={selectedStop}
+                  onSelectStop={(stop) => setSelectedStop(stop)}
+                />
+              </div>
 
-            <FuelStopsList
-              stops={planResult.optimal_fuel_stops}
-              selectedStop={selectedStop}
-              onSelectStop={(stop) => setSelectedStop(stop)}
-            />
+              <div className="w-full lg:w-1/2 flex flex-col min-h-[580px]">
+                <FuelStopsList
+                  stops={planResult.optimal_fuel_stops}
+                  selectedStop={selectedStop}
+                  onSelectStop={(stop) => setSelectedStop(stop)}
+                />
+              </div>
+            </div>
           </div>
         )}
       </main>
@@ -144,7 +151,7 @@ export default function App() {
             <span>&bull;</span>
             <span>DRF 3.18</span>
             <span>&bull;</span>
-            <span>CartoDB Voyager</span>
+            <span>OpenStreetMap</span>
             <span>&bull;</span>
             <span>Leaflet</span>
           </div>
