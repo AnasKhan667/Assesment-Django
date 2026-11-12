@@ -195,19 +195,3 @@ Visit **http://localhost:5173** to access the interactive web application.
 
 ---
 
-## 🎥 Loom Video Recording Checklist (5 Minutes Max)
-
-1. **Introduction (30s):** Introduce yourself and brief overview of the Spotter assessment requirements.
-2. **Postman Demonstration (1m 30s):**
-   - Execute `POST /api/v1/routes/plan/` with `New York, NY` to `Los Angeles, CA`.
-   - Show request payload and the structured response (summary, route coordinates, cost, stops).
-   - Test a short route (< 500 miles, e.g., NYC to Philadelphia) showing 0 stops needed and \$0 cost because it starts full.
-3. **React UI Walkthrough (1m):**
-   - Demonstrate the interactive UI running on `http://localhost:5173`.
-   - Show route drawn on the Leaflet map, pins for truck stops, and summary cards.
-4. **Code Tour (1m 30s):**
-   - `Backend/apps/fuel/services/optimizer.py`: Explain the greedy look-ahead algorithm and 500-mile window.
-   - `Backend/apps/routes/services/routing.py`: Explain how external routing calls are limited (parallel geocoding + 1 routing call).
-   - `Backend/apps/fuel/services/geocoder.py`: Offline geocoding with `pgeocode` for high performance.
-5. **Testing (30s):**
-   - Run `python manage.py test` showing 100% passing tests.
