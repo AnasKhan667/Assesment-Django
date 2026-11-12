@@ -7,18 +7,12 @@ from apps.fuel.models import TruckStop
 
 logger = logging.getLogger(__name__)
 
-# ---------------------------------------------------------------------------
-# Constants (match Django settings for reference — kept here for portability)
-# ---------------------------------------------------------------------------
+
 TANK_RANGE_MILES   = 500.0   # Vehicle max range on a full tank
 MPG                = 10.0    # Miles per gallon
 CORRIDOR_MILES     = 50.0    # Lateral search radius around route
 LOOKAHEAD_RATIO    = 0.5     # Prefer stops past 50% of remaining range
 
-
-# ---------------------------------------------------------------------------
-# Data classes
-# ---------------------------------------------------------------------------
 
 @dataclass
 class FuelStop:
@@ -42,9 +36,6 @@ class OptimizationResult:
     total_gallons: float = 0.0
 
 
-# ---------------------------------------------------------------------------
-# Public entry point
-# ---------------------------------------------------------------------------
 
 def optimize_fuel_stops(
     route_coords: list[list[float]],
@@ -153,10 +144,6 @@ def optimize_fuel_stops(
     result.total_gallons = round(result.total_gallons, 3)
     return result
 
-
-# ---------------------------------------------------------------------------
-# Internal helpers
-# ---------------------------------------------------------------------------
 
 def _build_cumulative_distances(waypoints: list[tuple[float, float]]) -> list[float]:
     """cumulative[i] = total miles from start to waypoints[i]."""
